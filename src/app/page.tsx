@@ -1,72 +1,97 @@
-import Image from "next/image";
+"use client";
+
+import { useState } from "react";
+
+import { motion } from "framer-motion";
+
+import styles from "../../styles/home.module.scss";
+
+const ServiceItem = ({ service, frame, setFrame, stylesClass, zIndex }) => (
+  <motion.div
+    initial={{ scale: 0 }}
+    animate={{ rotate: 360, scale: 1 }}
+    transition={{
+      type: "tween",
+      stiffness: 260,
+      damping: 20,
+    }}
+    whileHover={{ scale: 2.5, rotate: 360 }}
+    onMouseOver={() => setFrame(true)}
+    onMouseOut={() => setFrame(false)}
+    style={{ zIndex: zIndex }}
+  >
+    {frame ? (
+      <div className={`${styles.flower} ${stylesClass}`}>
+        <p className="text-[8px] text-white font-bold max-w-[180px]">
+          {service.description}
+        </p>
+      </div>
+    ) : (
+      <div className={`${styles.flower} ${stylesClass}`}>
+        <p className="text-lg text-white font-bold">{service.title}</p>
+      </div>
+    )}
+  </motion.div>
+);
 
 export default function Home() {
+  const [frameOne, setFrameOne] = useState(false);
+  const [frameTwo, setFrameTwo] = useState(false);
+  const [frameThree, setFrameThree] = useState(false);
+  const [hoveredIndex, setHoveredIndex] = useState<any>(null);
+
+  const services = [
+    {
+      title: "Research & Analysis",
+      description:
+        "Through a network of researchers and experts, we specialize in comprehensive research and analysis services designed to empower our clients with critical insights and strategic clarity. We conduct quantitative and qualitative research on political settlements, security landscape, local governance, and elections. By leveraging data-driven methodologies, we uncover actionable insights that guide informed decision-making and drive success.",
+    },
+    {
+      title: "Data & Visualization",
+      description:
+        "Transforming raw data into actionable insights is at the heart of what we do. Our data analysis experts excel in cleaning, processing, and analyzing complex datasets, employing advanced statistical techniques and predictive modeling. Through captivating visualizations such as interactive dashboards, charts, and graphs, we simplify complex information, enabling our clients to grasp insights quickly and make informed decisions with confidence.",
+    },
+    {
+      title: "Stakeholder Mapping",
+      description:
+        "Understanding and engaging stakeholders effectively is crucial in today's interconnected business landscape. We specialize in stakeholder mapping services that identify key individuals, organizations, and communities relevant to your initiatives. By analyzing their interests, influence, and relationships, we help you anticipate reactions, align strategies, and cultivate meaningful partnerships.",
+    },
+  ];
+
   return (
-    <div className="px-2 dark:text-white text-white ">
-      <main className="flex min-h-screen flex-1 flex-col items-center justify-center py-2">
-        <h1 className="m-0 bg-gradient-to-r from-blue-400 to-indigo-600 bg-clip-text text-center text-8xl font-extrabold text-transparent hover:cursor-pointer">
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-        <p className="my-16 text-center text-2xl">
-          Get started by editing{" "}
-          <code className="rounded-2xl bg-gray-100 p-3 text-base text-black">
-            pages/index.js
-          </code>
-        </p>
-        <div className="md:flex-unset flex max-w-3xl flex-wrap items-center justify-center">
-          <a
-            href="https://nextjs.org/docs"
-            className="m-4 min-h-[200px] max-w-xs rounded-md border p-6 text-left no-underline transition-colors duration-700 ease-in-out hover:border-indigo-500 hover:text-indigo-300"
-          >
-            <h2 className="mb-8 text-2xl">Documentation &rarr;</h2>
-            <p className="m-0 text-xl">
-              Find in-depth information about Next.js features and API.
-            </p>
-          </a>
-
-          <a
-            href="https://nextjs.org/learn"
-            className="m-4 min-h-[200px] max-w-xs rounded-md border p-6 text-left no-underline transition-colors duration-700 ease-in-out hover:border-indigo-500 hover:text-indigo-300"
-          >
-            <h2 className="mb-8 text-2xl">Learn &rarr;</h2>
-            <p className="m-0 text-xl">
-              Learn about Next.js in an interactive course with quizzes!
-            </p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className="m-4 min-h-[200px] max-w-xs rounded-md border p-6 text-left no-underline transition-colors duration-700 ease-in-out hover:border-indigo-500 hover:text-indigo-300"
-          >
-            <h2 className="mb-8 text-2xl">Examples &rarr;</h2>
-            <p className="m-0 text-xl">
-              Discover and deploy boilerplate example Next.js projects.
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className="m-4 min-h-[200px] max-w-xs rounded-md border p-6 text-left no-underline transition-colors duration-700 ease-in-out hover:border-indigo-500 hover:text-indigo-300"
-          >
-            <h2 className="mb-8 text-2xl">Deploy &rarr;</h2>
-            <p className="m-0 text-xl">
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
+    <div className="px-2 text-black">
+      <main className="flex flex-1 flex-col md:flex-row gap-x-[-20px] items-center py-2">
+        <ServiceItem
+          service={services[0]}
+          frame={frameOne}
+          setFrame={(state) => {
+            setFrameOne(state);
+            setHoveredIndex(state ? 0 : null);
+          }}
+          stylesClass={styles.flower1}
+          zIndex={hoveredIndex === 0 ? 1 : 0}
+        />
+        <ServiceItem
+          service={services[1]}
+          frame={frameTwo}
+          setFrame={(state) => {
+            setFrameTwo(state);
+            setHoveredIndex(state ? 1 : null);
+          }}
+          stylesClass={styles.flower2}
+          zIndex={hoveredIndex === 1 ? 1 : 0}
+        />
+        <ServiceItem
+          service={services[2]}
+          frame={frameThree}
+          setFrame={(state) => {
+            setFrameThree(state);
+            setHoveredIndex(state ? 2 : null);
+          }}
+          stylesClass={styles.flower3}
+          zIndex={hoveredIndex === 2 ? 1 : 0}
+        />
       </main>
-      <footer className="flex h-[100px] w-full items-center justify-center border">
-        <div className="flex items-center justify-center">
-          <span className="mr-2">Powered by</span>
-          <Image
-            className="ml-2 "
-            src="/vercel-light.svg"
-            alt="Vercel Logo"
-            width={72}
-            height={16}
-          />
-        </div>
-      </footer>
     </div>
   );
 }

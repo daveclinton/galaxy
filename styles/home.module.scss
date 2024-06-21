@@ -1,0 +1,53 @@
+$n: 13; /* the number of circles/petals */
+
+.flower {
+  --s: 280px; /* image size */
+  --a: 28deg; /* this will control the curvature */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  --r: calc(var(--s)/(2 + 2/sin(90deg/#{$n})));
+  width: var(--s);
+  aspect-ratio: 1;
+  box-sizing: border-box;
+  --R: calc(var(--r)*cos(90deg/#{$n})*(1/cos(90deg/#{$n} - var(--a)) + 1/cos(90deg/#{$n} + var(--a))));
+  --g:/var(--R) var(--R) radial-gradient(50% 50%,#000 calc(100% - 1px),#0000) no-repeat;
+  $m1: ();
+  $m2: ();
+  @for $i from 1 through $n { 
+    $m1: append($m1, 
+      calc(50% + (50% - var(--r)*sin(var(--a))/cos(var(--a) - 90deg/#{$n}))*cos(360deg*#{$i/$n})) 
+      calc(50% + (50% - var(--r)*sin(var(--a))/cos(var(--a) - 90deg/#{$n}))*sin(360deg*#{$i/$n}))
+      var(--g), 
+    comma);
+    $m2: append($m2, 
+      calc(50% + (50% + var(--r)*sin(var(--a))/cos(var(--a) + 90deg/#{$n}))*cos((360deg*#{$i} + 180deg)/#{$n})) 
+      calc(50% + (50% + var(--r)*sin(var(--a))/cos(var(--a) + 90deg/#{$n}))*sin((360deg*#{$i} + 180deg)/#{$n}))
+      var(--g), 
+    comma);
+  }
+  mask:
+    #{$m1},
+    radial-gradient(100% 100%,#000 calc(var(--r)/tan(90deg/#{$n})),#0000 calc(var(--r)/tan(90deg/#{$n}) + 1px)) intersect,
+    radial-gradient(#000 0 0) exclude,
+    #{$m2};
+}
+.flower1 {
+  @extend .flower;
+  background:#CFDBD5; 
+  
+}
+
+.flower2 {
+  @extend .flower;
+  background:#048A81;
+}
+
+.flower3 {
+  @extend .flower;
+  background: #FFBCB5; 
+}
+
+
+

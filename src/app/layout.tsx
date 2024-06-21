@@ -15,14 +15,17 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.className}>
       <head>
-        <title>Mike van Peeren</title>
+        <title>Resana Consulting</title>
       </head>
-      <body className="bg-black">
-        <div className="mx-auto max-w-screen-lg px-6 py-12">
-          <div className="col-start-2">
-            {/* Here you can place your Navigation */}
-          </div>
+      <body>
+        <div className="mx-auto px-6 py-12">
+          <p className="text-white text-4xl font-extrabold text-center mb-10">
+            RESANA CONSULTING
+          </p>
           <div>{children}</div>
+          <p className="text-white mt-24 text-sm text-center">
+            Contact Us: info@resana.so Somalia
+          </p>
         </div>
       </body>
     </html>
