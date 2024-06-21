@@ -35,18 +35,19 @@ $n: 13; /* the number of circles/petals */
 }
 .flower1 {
   @extend .flower;
-  background:#CFDBD5; 
+  background: linear-gradient(60deg, #93A5CF, #E4EfE9); 
   
 }
 
 .flower2 {
   @extend .flower;
-  background:#048A81;
+  background: linear-gradient(60deg,   #11998E , #38EF7D);
+
 }
 
 .flower3 {
   @extend .flower;
-  background: #FFBCB5; 
+  background: linear-gradient(60deg, #662D8C , #ED1E79); 
 }
 
 
